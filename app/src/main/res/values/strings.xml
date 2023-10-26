@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WebLink Client</string>
+    <string name="please_connect_to_the_system_message">Please connect your phone to the system\nto begin using WebLink.</string>
+    <string name="dummy">dummy\n</string>
+</resources>

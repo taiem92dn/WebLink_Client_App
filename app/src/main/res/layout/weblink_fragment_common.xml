@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/common_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/loading_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Loading"
+                android:textSize="24sp" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:indeterminate="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#7F000000"
+            android:textColor="#ffffff" />
+
+        <ProgressBar
+            android:id="@+id/wait_indicator"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/white"
+            android:indeterminate="true" />
+
+        <Button
+            android:id="@+id/btn_backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:text="Backspace"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/cmd_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/hide_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_hide_button"
+                android:contentDescription="@string/dummy"
+                android:paddingLeft="@dimen/padding_horizontal"
+                android:paddingTop="@dimen/margin_small"
+                android:paddingRight="@dimen/padding_horizontal"
+                android:src="@drawable/ic_drag_handle_24" />
+
+            <FrameLayout
+                android:id="@+id/cmd_bar_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hide_button"
+                android:background="@color/bar_color">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="@dimen/margin_small"
+                    android:paddingEnd="@dimen/margin_small">
+
+                    <ImageView
+                        android:id="@+id/minimize_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/dummy"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_minimize_24" />
+
+                    <ImageView
+                        android:id="@+id/back_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_marginStart="@dimen/margin_big"
+                        android:layout_toEndOf="@id/minimize_button"
+                        android:contentDescription="@string/dummy"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_arrow_back" />
+
+                    <ImageView
+                        android:id="@+id/home_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_toEndOf="@id/back_button"
+                        android:contentDescription="@string/dummy"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_home_24" />
+
+                    <ImageView
+                        android:id="@+id/forward_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_toEndOf="@id/home_button"
+                        android:contentDescription="@string/dummy"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_arrow_forward" />
+
+                    <ImageView
+                        android:id="@+id/handbrake_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_warning_24" />
+
+                    <ImageView
+                        android:id="@+id/prev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_toStartOf="@id/play"
+                        android:paddingEnd="@dimen/margin_small"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_previous_24" />
+
+                    <ImageView
+                        android:id="@+id/play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_toStartOf="@id/next"
+                        android:paddingEnd="@dimen/margin_small"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_play_arrow_24" />
+
+                    <ImageView
+                        android:id="@+id/next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/minimize_button"
+                        android:layout_alignBottom="@id/minimize_button"
+                        android:layout_marginEnd="@dimen/margin_big"
+                        android:layout_toStartOf="@id/close_button"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_next_24" />
+
+                    <ImageView
+                        android:id="@+id/close_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/dummy"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_close_24" />
+                </RelativeLayout>
+            </FrameLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

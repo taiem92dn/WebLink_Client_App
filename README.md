@@ -16,7 +16,7 @@ https://drive.google.com/file/d/1NClF36URkBouXVAd0KnTPBefXzjEy7Fo/view
 - Clone Repository
 - Open and use Android Studio to build and run app
  ## Requirements to build the app.
-  - Android Studio Giraffe | 2022.3.1 Patch 2
+  - Android Studio Arctic Fox 2020.3.1 Patch 2 or above
  ## Supported features
   ### AutoConnect screen
   ### WebLink screen

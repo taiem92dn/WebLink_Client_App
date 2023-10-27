@@ -5,11 +5,18 @@ import android.graphics.Bitmap
 import android.os.Build
 import com.abaltatech.mcs.connectionmanager.EConnectionResult
 import com.abaltatech.mcs.connectionmanager.PeerDevice
+import com.abaltatech.mcs.logger.MCSLogger
 import com.abaltatech.weblink.core.authentication.DeviceIdentity
 import com.abaltatech.weblink.core.commandhandling.Command
 import com.abaltatech.weblinkclient.IClientNotification
 import com.abaltatech.weblinkclient.WebLinkClientCore
+import com.abaltatech.weblinkclient.audiodecoding.AudioDecoder_MediaCodec
+import com.abaltatech.weblinkclient.audiodecoding.AudioOutput
+import com.tngdev.weblinkclient.audio.AudioConfigFileParser
 import com.tngdev.weblinkclient.util.Utils
+import java.io.IOException
+import java.io.InputStream
+import java.lang.Exception
 
 class WebLinkClient(private val context: Context) : IClientNotification {
 
@@ -46,10 +53,51 @@ class WebLinkClient(private val context: Context) : IClientNotification {
             osVersion = Build.VERSION.SDK_INT.toString()
         }
 
-       mClientCore = WebLinkClientCore(context, this, mDeviceIdentity, null)
+        mClientCore = WebLinkClientCore(context, this, mDeviceIdentity, null)
+
+        setupAudio()
     }
 
     fun getWebLinkClientCore() = mClientCore
+
+    fun setupAudio() {
+        var parser: AudioConfigFileParser? = null
+        var inputStream: InputStream? = null
+
+        try {
+            inputStream = context.assets.open("AudioChannelsConfig.ini")
+            parser = AudioConfigFileParser(inputStream)
+        } catch (e: IOException) {
+            MCSLogger.log(
+                MCSLogger.ELogType.eError,
+                TAG,
+                "Failed to load default configuration file",
+                e
+            )
+            return
+        }
+
+        try {
+            parser.parse()
+
+            for (mapping in parser.channels) {
+                val decoder = AudioDecoder_MediaCodec()
+                val output = AudioOutput()
+                decoder.audioOutput = output
+                mClientCore.addAudioChannel(mapping, decoder)
+            }
+        } catch (e: Exception) {
+            MCSLogger.printStackTrace(TAG, e)
+        }
+    }
+
+    fun startAudio() {
+        mClientCore.startAudio(0)
+    }
+
+    fun stopAudio() {
+        mClientCore.stopAudio(0)
+    }
 
     override fun onServerListUpdated(servers: Array<IClientNotification.ServerInfo>?) {
         clientListener?.onServerListUpdated(servers)
@@ -72,6 +120,8 @@ class WebLinkClient(private val context: Context) : IClientNotification {
                 listener.onConnectionEstablished(peerDevice)
             }
         }
+
+        startAudio()
     }
 
     override fun onConnectionFailed(peerDevice: PeerDevice?, result: EConnectionResult?) {
@@ -96,6 +146,7 @@ class WebLinkClient(private val context: Context) : IClientNotification {
                 listener.onConnectionClosed(peerDevice)
             }
         }
+        stopAudio()
     }
 
     override fun onApplicationChanged(appId: Int) {
@@ -135,7 +186,7 @@ class WebLinkClient(private val context: Context) : IClientNotification {
     }
 
     override fun onCommandReceived(command: Command?): Boolean {
-       return true
+        return true
     }
 
     override fun onAudioChannelStarted(channelID: Int) {
@@ -172,5 +223,9 @@ class WebLinkClient(private val context: Context) : IClientNotification {
         synchronized(connListeners) {
             connListeners.remove(listener)
         }
+    }
+
+    companion object {
+        val TAG = WebLinkClient::class.simpleName
     }
 }

@@ -11,6 +11,7 @@
             android:id="@+id/loading_screen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/gray"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="visible">
@@ -20,12 +21,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Loading"
+                android:textColor="@color/white"
                 android:textSize="24sp" />
 
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_normal"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/white"
                 android:indeterminate="true" />
         </LinearLayout>
 

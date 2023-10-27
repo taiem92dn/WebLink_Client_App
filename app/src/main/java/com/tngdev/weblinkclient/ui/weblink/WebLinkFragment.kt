@@ -316,7 +316,7 @@ abstract class WebLinkFragment : Fragment(), View.OnTouchListener, IClientNotifi
     }
 
     private fun updateUI() {
-        showStats = false
+        showStats = true
         showCmdBar = false
         startProxy = false
 
